@@ -23,8 +23,9 @@ public class Login extends AppCompatActivity {
         String log = intent.getStringExtra(MainActivity.LOGIN);
         String pwd = intent.getStringExtra(MainActivity.PASS);
         buscaUsuario(log,pwd);
-        usuarios();
         senhas();
+        usuarios();
+
     }
 
     public String buscaUsuario(String login, String pass) {
