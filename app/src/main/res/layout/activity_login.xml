@@ -39,7 +39,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="Login"
-        android:onClick="efetuaLogin"/>
+        android:text="Login"  />
 
 </LinearLayout>
