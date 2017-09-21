@@ -6,48 +6,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back"
     tools:context=".LoginActivity">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dip"
+        android:padding="80dip"
         android:id="@+id/layoutLogin">
 
-        <TextView
-            android:layout_width="fill_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/login_box"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:textColorHint="#FFFFFF"
+            android:layout_marginTop="4dp">
 
         <EditText
             android:id="@+id/login_user"
+            android:textColor="#FFFFFF"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             android:layout_marginBottom="20dip"
             android:inputType="text"
+            android:hint="@string/username"
             android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:layout_width="fill_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_box"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Senha"/>
-
+            android:textColorHint="#FFFFFF"
+            android:layout_marginTop="4dp">
         <EditText
             android:id="@+id/password_user"
+            android:textColor="#FFFFFF"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             android:layout_marginBottom="20dip"
             android:inputType="textPassword"
+            android:hint="@string/password"
             android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Login"  />
-
+            android:hint="@string/login"  />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

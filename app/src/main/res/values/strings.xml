@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">CCO2ANPI_Mobile</string>
+    <string name="app_name">Sistema de Controle Predial</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="temperature">Temperatura</string>
+    <string name="floor">Andar da empresa</string>
+    <string name="login">Login</string>
+
+    //Tela completa
+    <string name="funcionario">Funcionários</string>
+    <string name="empresa">Empresas</string>
+    <string name="temperatura">Ar Condicionado</string>
+    <string name="welcome">Seja bem vindo !\n\n</string>
+    <string name="cadastrarFunc">Cadastrar Funcionário</string>
+    <string name="consultarFunc">Consultar Funcionário</string>
+    <string name="alterarFunc">Alterar Funcionário</string>
+    <string name="excluirFunc">Excluir Funcionário</string>
+    <string name="cadastrarEmp">Cadastrar Empresa</string>
+    <string name="consultarEmp">Consultar Empresa</string>
+    <string name="alterarEmp">Alterar Empresa</string>
+    <string name="excluirEmp">Excluir Empresa</string>
+    <string name="telaCompleta">Seja bem vindo !\n\nSelecione abaixo o módulo que deseja acessar.</string>
+
+    //Tela resumida
+    <string name="arCondicionado">Alterar Temperatura</string>
+    <string name="textoFuncionario">"Seja bem vindo !\n\nPor favor, selecione o andar e defina a temperatura do andar."</string>
+
+
 </resources>

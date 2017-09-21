@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     protected User doInBackground(String... strings) {
-                        UserClient userClient = new UserClient("http://192.168.0.105:8080/Services");
+                        UserClient userClient = new UserClient("http://192.168.1.178:8080/Services");
                         User user = new User();
                         try {
                             user.setUsername(strings[0]);
