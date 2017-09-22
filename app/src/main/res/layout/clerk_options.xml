@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/back"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/layoutClerck">
 
     <Button
         android:id="@+id/btnFuncionario"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="25dp"
@@ -17,7 +17,7 @@
 
     <Button
         android:id="@+id/btnEmpresa"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="25dp"

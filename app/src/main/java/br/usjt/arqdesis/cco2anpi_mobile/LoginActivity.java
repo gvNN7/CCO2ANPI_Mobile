@@ -1,16 +1,20 @@
 package br.usjt.arqdesis.cco2anpi_mobile;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ProgressBar;
+
+import com.google.gson.Gson;
 
 import br.com.cco2anpi.clients.UserClient;
 import br.com.cco2anpi.models.User;
@@ -23,11 +27,13 @@ import br.com.cco2anpi.tools.Crypto;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText txtUsername;
-    private EditText txtPassword;
+    public static final String CONNECTIONS = "connections";
+    private TextInputEditText txtUsername;
+    private TextInputEditText txtPassword;
     private Button btnLogin;
-    private ProgressDialog dialog;
     private Context context;
+    private ProgressBar progressBar;
+    private CoordinatorLayout coordinatorLayout;
 
     /**
      * Method used when activity start
@@ -36,11 +42,19 @@ public class LoginActivity extends AppCompatActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(getWindow().FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_login);
-        txtUsername = (EditText) findViewById(R.id.login_user);
-        txtPassword = (EditText) findViewById(R.id.password_user);
+        txtUsername = (TextInputEditText) findViewById(R.id.login_user);
+        txtPassword = (TextInputEditText) findViewById(R.id.password_user);
         btnLogin = (Button) findViewById(R.id.btnLogin);
+        progressBar = (ProgressBar) findViewById(R.id.progress_view);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         context = this.getApplicationContext();
+
+        SharedPreferences settings = getSharedPreferences(CONNECTIONS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("services", getString(R.string.services));
+        editor.commit();
 
         /**
          * Set action of button
@@ -61,8 +75,15 @@ public class LoginActivity extends AppCompatActivity {
                 class Authentication extends AsyncTask<String, Void, User> {
 
                     @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        progressBar.setVisibility(ProgressBar.VISIBLE);
+                        coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.blackTransparent, getApplicationContext().getTheme()));
+                    }
+
+                    @Override
                     protected User doInBackground(String... strings) {
-                        UserClient userClient = new UserClient("http://10.128.125.6:8080/Services");
+                        UserClient userClient = new UserClient(getSharedPreferences(CONNECTIONS, 0).getString("services", ""));
                         User user = new User();
                         try {
                             user.setUsername(strings[0]);
@@ -76,12 +97,12 @@ public class LoginActivity extends AppCompatActivity {
 
                     protected void onPostExecute(User user) {
                         authenticate(user);
+                        progressBar.setVisibility(ProgressBar.GONE);
+                        coordinatorLayout.setBackgroundColor(getResources().getColor(R.color.white, getApplicationContext().getTheme()));
                     }
                 }
                 // execute dialog while authenticating
-                dialog = ProgressDialog.show(LoginActivity.this, "",
-                        "Loading. Please wait...", true);
-                dialog.show();
+                setProgressBarIndeterminateVisibility(true);
                 // Execute async task
                 new Authentication().execute(txtUsername.getText().toString(), txtPassword.getText().toString());
             }
@@ -97,12 +118,12 @@ public class LoginActivity extends AppCompatActivity {
     public User authenticate(User user) {
         Snackbar snackbar;
         //dismiss dialog while authentication over
-        dialog.dismiss();
+        setProgressBarIndeterminateVisibility(false);
         if (user.getUserId() != null) {
 
             //create intent, fill extra with user object, and go to another activity
             Intent intent = new Intent(this, ManagerActivity.class);
-            intent.putExtra("userID", user.getUserId());
+            intent.putExtra("user", new Gson().toJson(user));
             startActivity(intent);
             finish();
         } else {

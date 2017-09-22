@@ -2,15 +2,13 @@ package br.usjt.arqdesis.cco2anpi_mobile;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import br.com.cco2anpi.clients.UserClient;
+import com.google.gson.Gson;
+
 import br.com.cco2anpi.models.TypeEnum;
 import br.com.cco2anpi.models.User;
 
@@ -22,6 +20,9 @@ import br.com.cco2anpi.models.User;
 public class ManagerActivity extends AppCompatActivity {
 
     private LinearLayout limitedLayout;
+    private LinearLayout layoutSyndic;
+    private LinearLayout layoutEmployee;
+    private LinearLayout layoutClerck;
     private Button btnFuncionario;
     private Button btnEmpresa;
     private Button btnArCondicionado;
@@ -38,74 +39,23 @@ public class ManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_options);
         limitedLayout = (LinearLayout) findViewById(R.id.linearLayoutFullOptions);
+        layoutSyndic = (LinearLayout) getLayoutInflater().inflate(R.layout.syndic_options, null);
+        layoutEmployee  = (LinearLayout) getLayoutInflater().inflate(R.layout.employee_options, null);
+        layoutClerck = (LinearLayout) getLayoutInflater().inflate(R.layout.clerk_options, null);
         btnFuncionario = (Button) findViewById(R.id.btnFuncionario);
         btnEmpresa = (Button) findViewById(R.id.btnEmpresa);
         btnArCondicionado = (Button) findViewById(R.id.btnArCondicionado);
         context = this.getApplicationContext();
-        user = new User();
-        user.setUserId(Integer.parseInt(getIntent().getStringExtra("userID")));
-        final UserClient userClient = new UserClient("http://10.128.125.6:8080/Services");
+        user = new User( new Gson().fromJson(getIntent().getStringExtra("user"), User.class));
 
-        class GetUser extends AsyncTask<User, Void, User> {
-
-            @Override
-            protected User doInBackground(User... users) {
-                return userClient.getUser(users[0]).getBody().getResponse();
-            }
-
-            protected void onPostExecute(User user) { configureUser(user); };
-        }
-
-        /**
-         * Set action of button Funcionários
-         */
-        btnFuncionario.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View view){
-                //Action to be implemented
-                // execute dialog while authenticating
-                dialog = ProgressDialog.show(ManagerActivity.this, "",
-                        "Loading. Please wait...", true);
-                dialog.show();
-            }
-        });
-
-        /**
-         * Set action of button Empresas
-         */
-        btnEmpresa.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View view){
-                //Action to be implemented
-                dialog = ProgressDialog.show(ManagerActivity.this, "",
-                        "Loading. Please wait...", true);
-                dialog.show();
-            }
-        });
-
-        /**
-         * Set action of button Ar Condicionado
-         */
-        btnArCondicionado.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View view){
-                //Action to be implemented
-                dialog = ProgressDialog.show(ManagerActivity.this, "",
-                        "Loading. Please wait...", true);
-                dialog.show();
-            }
-        });
-    }
-
-    public void configureUser(User user){
-        this.user = user;
         TypeEnum typeUser = TypeEnum.getValue(this.user.getType());
-        if(typeUser == TypeEnum.SYNDIC) {
-            //limitedLayout.addView((LinearLayout) findViewById(R.layout.syndic_options));
-        } else if(typeUser == TypeEnum.CLERK) {
-
-        } else if(typeUser == TypeEnum.COMPANY) {
-
+        if (typeUser == TypeEnum.SYNDIC) {
+            limitedLayout.addView(layoutSyndic);
+        } else if (typeUser == TypeEnum.CLERK) {
+            limitedLayout.addView(layoutClerck);
+        } else if (typeUser == TypeEnum.COMPANY) {
+            limitedLayout.addView(layoutEmployee);
         }
     }
+
 }

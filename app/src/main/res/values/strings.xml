@@ -26,5 +26,5 @@
     <string name="arCondicionado">Alterar Temperatura</string>
     <string name="textoFuncionario">"Seja bem vindo !\n\nPor favor, selecione o andar e defina a temperatura do andar."</string>
 
-
+    <string name="services">http://192.168.0.105:8080/Services</string>
 </resources>

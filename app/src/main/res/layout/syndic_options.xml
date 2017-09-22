@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/back"
-    android:padding="60dp"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/layoutSyndic">
 
     <Button
         android:id="@+id/btnSindico"
@@ -16,5 +15,5 @@
         android:hint="@string/sindico"
         android:layout_weight="0.03" />
 
-    <include android:layout="@layout/clerk_options" />
+    <include layout="@layout/clerk_options" />
 </LinearLayout>
