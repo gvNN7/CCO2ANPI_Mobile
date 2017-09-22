@@ -2,6 +2,7 @@ package br.usjt.arqdesis.cco2anpi_mobile;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     protected User doInBackground(String... strings) {
-                        UserClient userClient = new UserClient("http://192.168.1.178:8080/Services");
+                        UserClient userClient = new UserClient("http://10.128.125.6:8080/Services");
                         User user = new User();
                         try {
                             user.setUsername(strings[0]);
@@ -98,11 +99,12 @@ public class LoginActivity extends AppCompatActivity {
         //dismiss dialog while authentication over
         dialog.dismiss();
         if (user.getUserId() != null) {
+
             //create intent, fill extra with user object, and go to another activity
-            snackbar = Snackbar.make(findViewById(R.id.coordinatorLayout),
-                    "User validated!",
-                    Snackbar.LENGTH_LONG);
-            snackbar.show();
+            Intent intent = new Intent(this, ManagerActivity.class);
+            intent.putExtra("userID", user.getUserId());
+            startActivity(intent);
+            finish();
         } else {
             snackbar = Snackbar.make(findViewById(R.id.coordinatorLayout),
                     "Username or password invalid!",
